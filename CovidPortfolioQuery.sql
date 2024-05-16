@@ -1,5 +1,0 @@
-SELECT TOP (1000) [continent]
-      ,[location]
-      ,[date]
-      ,[new_vaccinations]
-  FROM [PortfolioProject1].[dbo].[PopVsVac]
