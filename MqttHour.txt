@@ -1,0 +1,71 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using System.Globalization;
+
+
+namespace Rocworks.Mqtt {
+    public class mqttHour : MonoBehaviour
+    {
+        public MqttClient MqttClient;
+        public GameObject ObjectToHandle;
+        public Toggle IsConnected;
+
+        public int hour;
+        //public int nextHour;
+
+        public Material earlyMorningSky;
+        public Material noonSky;
+        public Material eveningSky;
+        public Material nightSky;
+
+        private float _rotationX;
+
+        // Start is called before the first frame update
+        void Start()
+        {
+      
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+            //Update the angle of the rotation of the light source
+            this.ObjectToHandle.transform.eulerAngles = new Vector3(_rotationX, 0, 0);
+            //this.IsConnected.isOn = this.MqttClient.Connection.GetConnectState();
+            //this.hour = nextHour;
+        }
+
+        public void OnConnected()
+        {
+            Debug.Log("Connected to localhost");
+        }
+
+        public void OnMessageArrived(MqttMessage m)
+        {
+            //rotate the light source according to the message from Node-Red
+            Debug.Log("LOCAL message arrived");
+            hour = int.Parse(m.GetString(), CultureInfo.InvariantCulture);
+            Debug.Log(hour);
+            _rotationX = (215 + hour * 15) % 360;
+            if (30 <= _rotationX && 150 > _rotationX)          //noon skybox
+            {
+                RenderSettings.skybox = noonSky;
+            }
+            else if (150 <=  _rotationX && _rotationX < 200)
+            {
+                RenderSettings.skybox = eveningSky;
+            }
+            else if (200 <= _rotationX && _rotationX <= 315)
+            {
+                RenderSettings.skybox = nightSky;
+            }
+            else
+            {
+                RenderSettings.skybox = earlyMorningSky;
+            }
+
+        }
+    }
+}
