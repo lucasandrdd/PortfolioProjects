@@ -1,0 +1,180 @@
+[
+    {
+        "id": "59c62ed15bd8b919",
+        "type": "tab",
+        "label": "Flow 5",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "5f22b583fae749cd",
+        "type": "inject",
+        "z": "59c62ed15bd8b919",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "150",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 190,
+        "y": 180,
+        "wires": [
+            [
+                "f6447b3212a42c5f"
+            ]
+        ]
+    },
+    {
+        "id": "93375a15ee97ad32",
+        "type": "debug",
+        "z": "59c62ed15bd8b919",
+        "name": "debug 14",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 600,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "f6447b3212a42c5f",
+        "type": "function",
+        "z": "59c62ed15bd8b919",
+        "name": "Virtual Hour",
+        "func": "var date = new Date();\nvar minutes = date.getMinutes();\nvar fakeHour = Math.floor(minutes / (60/24));\nreturn {payload : fakeHour};",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 180,
+        "wires": [
+            [
+                "93375a15ee97ad32",
+                "417e538a37ae0332"
+            ]
+        ]
+    },
+    {
+        "id": "e527ce8b5d80a964",
+        "type": "debug",
+        "z": "59c62ed15bd8b919",
+        "name": "debug 15",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 480,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "dc0ab3e620bf70da",
+        "type": "mqtt in",
+        "z": "59c62ed15bd8b919",
+        "name": "test",
+        "topic": "test1",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "589d8b385e8a3b66",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 230,
+        "y": 360,
+        "wires": [
+            [
+                "e527ce8b5d80a964"
+            ]
+        ]
+    },
+    {
+        "id": "417e538a37ae0332",
+        "type": "mqtt out",
+        "z": "59c62ed15bd8b919",
+        "name": "",
+        "topic": "hour",
+        "qos": "2",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "589d8b385e8a3b66",
+        "x": 650,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "df2c5122de9d63eb",
+        "type": "function",
+        "z": "59c62ed15bd8b919",
+        "name": "function 2",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "589d8b385e8a3b66",
+        "type": "mqtt-broker",
+        "name": "mosquitto",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    }
+]
